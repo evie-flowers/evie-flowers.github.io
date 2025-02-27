@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Under Construction</title>
-
-  <link rel="stylesheet" href="styles.css">
-  <!-- Import the Outfit font from Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>hi</title>
+  <!-- Google Fonts: Outfit -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <h1>Hello!</h1>
-    <p>I'm Evelyn Flowers, this website is under construction.</p>
-  </header>
-
-  <div class="cube-wrapper">
-    <div class="cube">
-      <div class="face front"></div>
-      <div class="face back"></div>
-      <div class="face left"></div>
-      <div class="face right"></div>
-      <div class="face top"></div>
-      <div class="face bottom"></div>
+  <!-- Background container -->
+  <div id="background"></div>
+  
+  <div class="container">
+    <h1 class="fade-in" style="animation-delay: 0.2s;">Evelyn Flowers</h1>
+    
+    <div class="section fade-in" style="animation-delay: 0.4s;">
+      <h2>Tools</h2>
+      <p>Blender, Figma, Unreal Engine, Premiere Pro, Photoshop, Illustrator</p>
     </div>
+    
+    <div class="section fade-in" style="animation-delay: 0.6s;">
+      <h2>Learning</h2>
+      <p>HTML, CSS, JavaScript</p>
+    </div>
+    
+    <div class="section fade-in" style="animation-delay: 0.8s;">
+      <h2>Find Me Here</h2>
+      <p>
+        Twitter: <a href="https://twitter.com/evie_flowerrs" target="_blank">@evie_flowerrs</a><br>
+        Bluesky: <a href="https://bsky.app/profile/evie.flowers" target="_blank">@evie.flowers</a><br>
+        Discord: <span class="highlight">evie.flowers</span><br>
+        Contact: <span class="highlight">hello@evie.flowers</span><br>
+      </p>
+    </div>
+    
+    <!-- credit the photo -->
+    <footer id="footer" class="fade-in" style="animation-delay: 1s;"></footer>
   </div>
-
+  
+  <!-- include the colorthief stuff -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

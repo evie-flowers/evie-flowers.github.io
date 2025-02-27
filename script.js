@@ -1,28 +1,55 @@
-const cube = document.querySelector('.cube');
-let isDragging = false;
-let startX, startY;
-let currentX = 0, currentY = 0;
-
-cube.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  startX = e.clientX;
-  startY = e.clientY;
-});
-
-document.addEventListener('mousemove', (e) => {
-  if (!isDragging) return;
-
-  const deltaX = e.clientX - startX;
-  const deltaY = e.clientY - startY;
-
-  currentX += deltaY * 0.1;
-  currentY += deltaX * 0.1;
-
-  cube.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
-  startX = e.clientX;
-  startY = e.clientY;
-});
-
-document.addEventListener('mouseup', () => {
-  isDragging = false;
+document.addEventListener("DOMContentLoaded", function() {
+  // fetch bing image of day shoutout https://github.com/TimothyYe/bing-wallpaper
+  fetch("https://bing.biturl.top")
+    .then(response => response.json())
+    .then(data => {
+      const imageUrl = data.url;
+      const img = new Image();
+      img.crossOrigin = "Anonymous"; // Prevent CORS issues for color extraction
+      img.src = imageUrl;
+      img.onload = function() {
+        // fade in when loaded
+        const bg = document.getElementById("background");
+        bg.style.backgroundImage = `url(${imageUrl})`;
+        bg.style.opacity = 1;
+        
+        // colorthief gives us accent colour
+        const colorThief = new ColorThief();
+        const dominantColor = colorThief.getColor(img);
+        // turn dat into hex
+        const rgbToHex = (r, g, b) => "#" + [r, g, b].map(x => {
+          const hex = x.toString(16);
+          return hex.length === 1 ? "0" + hex : hex;
+        }).join("");
+        
+        const accentColor = rgbToHex(dominantColor[0], dominantColor[1], dominantColor[2]);
+        // overwrite accent colour
+        document.documentElement.style.setProperty('--accent-color', accentColor);
+        
+        // make a lighter version for hover effects
+        function lightenColor(hex, percent) {
+          hex = hex.replace(/^#/, '');
+          let r = parseInt(hex.substring(0,2), 16);
+          let g = parseInt(hex.substring(2,4), 16);
+          let b = parseInt(hex.substring(4,6), 16);
+          r = Math.min(255, Math.floor(r + (255 - r) * (percent / 100)));
+          g = Math.min(255, Math.floor(g + (255 - g) * (percent / 100)));
+          b = Math.min(255, Math.floor(b + (255 - b) * (percent / 100)));
+          return "#" + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+        }
+        
+        const accentHover = lightenColor(accentColor, 40); // set lighten amount in %
+        document.documentElement.style.setProperty('--accent-hover', accentHover);
+        
+        // pain regex to only get copyright stuff from in brackets
+        if (data.copyright) {
+          const footer = document.getElementById("footer");
+          const match = data.copyright.match(/\(([^)]+)\)/);
+          if (match && match[1]) {
+            footer.innerText = "Background Photo: " + match[1];
+          }
+        }
+      };
+    })
+    .catch(err => console.error("Error fetching Bing image:", err));
 });
