@@ -33,24 +33,63 @@ body {
 
 /* the main thing */
 .container {
+  position: relative;
+  border-radius: 10px;
+  border: 0.1rem solid black; /* outie outline */
+  box-shadow: inset 0 0 0 0.1rem rgba(255, 255, 255, 0.3), /* innie outline */
+    /* mac drop shadows stolen from figma */
+    0 0 3px rgba(0, 0, 0, 0.25),
+    0 36px 100px rgba(0, 0, 0, 0.4);
   text-align: center;
   padding: 2rem;
-  border-radius: 12px;
-  background: rgba(20, 20, 20, 0.85);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.6);
-  outline: 0.1rem solid black;
-  border: 0.1rem solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  mix-blend-mode: luminosity;
+  overflow: hidden; 
+}
 
+/* pseudoelement for blend mode */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: rgba(32, 32, 32, 0.96); /* windows mica */
+  backdrop-filter: blur(50px);
+  -webkit-backdrop-filter: blur(50px);
+  mix-blend-mode: luminosity;
+  z-index: -1;
 }
 
 /* firefox doesnt like blur + blend mode */
 @-moz-document url-prefix() {
-  .container {
+  .container::before {
+    background: rgba(20, 20, 20, 0.7);
     mix-blend-mode: normal;
   }
+}
+
+/* traffic lights */
+.macos-traffic-lights {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.traffic-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.traffic-light--close {
+  background-color: #ff5f57;
+}
+.traffic-light--minimize {
+  background-color: #febc2e;
+}
+.traffic-light--fullscreen {
+  background-color: #28c840;
 }
 
 /* texts n stuffs */
