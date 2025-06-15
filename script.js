@@ -74,5 +74,5 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       };
     })
-    .catch(err => console.error("Error fetching Bing image:", err));
+    .catch(err => console.error("Error fetching Microsoft Image of the Day:", err));
 });
