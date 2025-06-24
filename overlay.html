@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    /* Make background transparent for OBS overlay */
     html, body {
       margin: 0;
       padding: 0;
@@ -20,20 +19,21 @@
     }
     .floating {
       position: absolute;
-      bottom: -100px; /* start slightly below view */
-      animation: floatUp 4s ease-out forwards;
-      pointer-events: none; /* allow clicks through */
+      bottom: -100px;
+      animation: catfly 5s ease-out forwards;
+      pointer-events: none;
     }
-    @keyframes floatUp {
+
+    @keyframes catfly {
       0% {
-        transform: translateY(0) scale(0.8);
+        transform: translateY(0) scale(.5);
         opacity: 0;
       }
       10% {
         opacity: 1;
       }
       100% {
-        transform: translateY(-100vh) scale(1);
+        transform: translateY(-60vh) scale(.1);
         opacity: 0;
       }
     }
@@ -44,22 +44,17 @@
   <div id="container"></div>
   <script>
     const container = document.getElementById('container');
-    // Replace with your image URL or local path
     const imageUrl = 'assets/cat.png';
-    // Spawn a floating image every interval (ms)
-    const spawnInterval = 600;
+    const spawnInterval = 130;
 
     function spawnFloating() {
       const img = document.createElement('img');
       img.src = imageUrl;
       img.className = 'floating';
-      // random horizontal position
       img.style.left = Math.random() * 100 + 'vw';
-      // random size between 50px and 150px width
-      const size = 50 + Math.random() * 100;
+      const size = 50 + Math.random() * 80;
       img.style.width = size + 'px';
       container.appendChild(img);
-      // remove after animation
       img.addEventListener('animationend', () => container.removeChild(img));
     }
 
