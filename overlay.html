@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+
     html, body {
       margin: 0;
       padding: 0;
@@ -12,37 +13,48 @@
       overflow: hidden;
       background: transparent;
     }
+
+    :root {
+      --animationSpeed: 5s;
+      --floatHeight: -60vh;
+      --startSize: .5;
+      --endSize: .1;
+    }
+
     #container {
       position: relative;
       width: 100%;
       height: 100%;
     }
+
     .floating {
       position: absolute;
       bottom: -100px;
-      animation: catfly 5s ease-out forwards;
+      animation: catfly var(--animationSpeed) ease-out forwards;
       pointer-events: none;
     }
 
     @keyframes catfly {
       0% {
-        transform: translateY(0) scale(.5);
+        transform: translateY(0) scale(var(--startSize));
         opacity: 0;
       }
       10% {
         opacity: 1;
       }
       100% {
-        transform: translateY(-60vh) scale(.1);
+        transform: translateY(var(--floatHeight)) scale(var(--endSize));
         opacity: 0;
       }
     }
+
   </style>
   <title>obs</title>
 </head>
 <body>
   <div id="container"></div>
   <script>
+
     const container = document.getElementById('container');
     const imageUrl = 'assets/cat.png';
     const spawnInterval = 130;
@@ -59,6 +71,7 @@
     }
 
     setInterval(spawnFloating, spawnInterval);
+    
   </script>
 </body>
 </html>
