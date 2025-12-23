@@ -1,43 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Evelyn Flowers</title>
-  <!-- Google Fonts: Outfit -->
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <!-- Background container -->
-  <div id="background"></div>
-  
-  <div class="container">
-        <!-- mac traffic lights -->
-    <div class="macos-traffic-lights">
-      <div class="traffic-light traffic-light--close"></div>
-      <div class="traffic-light traffic-light--minimize"></div>
-      <div class="traffic-light traffic-light--fullscreen"></div>
-    </div>
-    
-    <h1 class="fade-in" style="animation-delay: 0.2s;">Hi, I'm Evelyn.</h1>
-        
-    <div class="section fade-in" style="animation-delay: 0.8s;">
-      <h2>Find Me Here</h2>
+  <head>
+    <meta charset="UTF-8" />
+    <title>evie's website</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- font i like -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Annapurna+SIL&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --accent: #878787;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Annapurna SIL", serif;
+        color: #fff;
+        background-color: #121214;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+
+      /* dark gradient on the left so text stays readable */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+          to right,
+          rgba(0, 0, 0, 0.8),
+          rgba(0, 0, 0, 0)
+        );
+        z-index: 0;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        padding: 4rem 5rem;
+        max-width: 700px;
+      }
+
+      h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(2.5rem, 5vw, 3.5rem);
+        font-weight: bold;
+        color: var(--accent);
+        text-shadow: 0 0 20px #00000077;
+      }
+
+      p {
+        margin: 0 0 2rem;
+        font-size: 1.2rem;
+        line-height: 1.5;
+        color: #ddd;
+        text-shadow: 0 0 20px #00000077;
+      }
+
+      .links a {
+        display: block;
+        width: fit-content;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        color: var(--accent);
+        text-decoration: none;
+        text-shadow: 0 0 20px #00000077;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        position: fixed;
+        left: 4rem;
+        bottom: 4rem;
+        font-size: 0.75rem;
+        color: #ffffff84;
+        z-index: 1;
+        text-shadow: 0 0 20px #00000077;
+      }
+
+      footer a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <h1>hi, im evelyn</h1>
       <p>
-        Twitter: <a href="https://twitter.com/evelyyrn" target="_blank">@evelyyrn</a><br>
-        Bluesky: <a href="https://bsky.app/profile/evie.flowers" target="_blank">@evie.flowers</a><br>
-        Discord: <span class="highlight">evelyyrn</span><br>
-        Contact: <span class="highlight">hello@evie.flowers</span><br>
+        i dont really have anything useful to put on this website so here are my
+        socials. i do 3d art in blender sometimes and also recently learning to play piano.
       </p>
-    </div>
-    
-    <!-- credit the photo -->
-    <footer id="footer" class="fade-in" style="animation-delay: 1s;"></footer>
-  </div>
-  
-  <!-- include the colorthief stuff -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.2/color-thief.umd.js"></script>
-  <script src="script.js"></script>
-</body>
+
+      <div class="links">
+        <a href="https://x.com/evelyyrn">twitter - @evelyyrn</a>
+        <a>discord - @evelyyrn</a>
+      </div>
+    </main>
+
+    <footer id="copyright"></footer>
+
+    <script>
+      const BING_ENDPOINT =
+        "https://bing.biturl.top/?format=json&index=0&mkt=en-US";
+
+      async function loadBackground() {
+        try {
+          const res = await fetch(BING_ENDPOINT);
+          const data = await res.json();
+
+          const imgUrl = data.url.startsWith("http")
+            ? data.url
+            : "https://www.bing.com" + data.url;
+
+          document.body.style.backgroundImage = `url(${imgUrl})`;
+
+          document.getElementById("copyright").innerHTML =
+            `image credit · <a href="${data.copyright_link}" target="_blank">${data.copyright}</a>`;
+
+          pickAccentFromImage(imgUrl);
+        } catch (e) {
+          console.error("couldnt load background image", e);
+        }
+      }
+
+      function pickAccentFromImage(src) {
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = src;
+
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          const pixels = ctx.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          ).data;
+
+          let r = 0,
+            g = 0,
+            b = 0,
+            samples = 0;
+
+          // skip pixels so this doesnt get expensive
+          for (let i = 0; i < pixels.length; i += 40) {
+            r += pixels[i];
+            g += pixels[i + 1];
+            b += pixels[i + 2];
+            samples++;
+          }
+
+          r = Math.round(r / samples);
+          g = Math.round(g / samples);
+          b = Math.round(b / samples);
+
+          const [h, s, l] = rgbToHsl(r, g, b);
+
+          const sat = Math.min(s * 1.4, 1);
+          const light = Math.min(l * 1.25 + 0.05, 0.75);
+
+          const accent = `hsl(${Math.round(
+            h * 360
+          )}, ${Math.round(sat * 100)}%, ${Math.round(light * 100)}%)`;
+
+          document.documentElement.style.setProperty("--accent", accent);
+        };
+      }
+
+      function rgbToHsl(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        let h = 0,
+          s = 0;
+        const l = (max + min) / 2;
+
+        if (max !== min) {
+          const d = max - min;
+          s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+          switch (max) {
+            case r:
+              h = (g - b) / d + (g < b ? 6 : 0);
+              break;
+            case g:
+              h = (b - r) / d + 2;
+              break;
+            case b:
+              h = (r - g) / d + 4;
+              break;
+          }
+
+          h /= 6;
+        }
+
+        return [h, s, l];
+      }
+
+      loadBackground();
+    </script>
+  </body>
 </html>
