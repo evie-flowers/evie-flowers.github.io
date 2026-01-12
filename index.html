@@ -27,7 +27,6 @@
         background-repeat: no-repeat;
       }
 
-      /* dark gradient on the left so text stays readable */
       body::before {
         content: "";
         position: fixed;
@@ -107,8 +106,9 @@
       </p>
 
       <div class="links">
-        <a href="https://x.com/evelyyrn">twitter - @evelyyrn</a>
-        <a>discord - @evelyyrn</a>
+        <a href="https://x.com/evelyyrn">twitter</a>
+        <a href="https://steamcommunity.com/id/evelyrn/">steam</a>
+        <a href="https://www.last.fm/user/evelyrn">last.fm</a>
       </div>
     </main>
 
@@ -163,7 +163,6 @@
             b = 0,
             samples = 0;
 
-          // skip pixels so this doesnt get expensive
           for (let i = 0; i < pixels.length; i += 40) {
             r += pixels[i];
             g += pixels[i + 1];
